@@ -1,0 +1,27 @@
+services:
+  db:
+    image: postgres:16-alpine
+    restart: always
+    environment:
+      POSTGRES_USER: boun_user
+      POSTGRES_PASSWORD: boun_password
+      POSTGRES_DB: boun_archive
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  meilisearch:
+    image: getmeili/meilisearch:latest
+    restart: always
+    environment:
+      MEILI_MASTER_KEY: masterKey123
+      MEILI_ENV: development
+    ports:
+      - "7700:7700"
+    volumes:
+      - meilisearch_data:/meili_data
+
+volumes:
+  postgres_data:
+  meilisearch_data:

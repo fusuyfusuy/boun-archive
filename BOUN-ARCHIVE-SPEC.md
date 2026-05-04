@@ -140,7 +140,7 @@ The primary data source must be normalized from the raw scraped HTML/CSV into a 
     *   Affordance: A slider to "play" the campus activity hour-by-hour (visualizing building utilization).
 4.  **`/trends/course/{course_code}`:**
     *   Shows the predictive dashboard for a specific class.
-    *   Line charts showing enrollment/credit trends.
+    *   Line charts showing credit trends.
     *   A "Radar" chart showing the time-slot probability distribution.
 5.  **`/legacy/{instructor_id}`:**
     *   The "Instructor DNA" page.
@@ -153,5 +153,8 @@ The primary data source must be normalized from the raw scraped HTML/CSV into a 
 To move data from the current scraper outputs to the production database:
 1.  **Cleanse:** Read `schedules.csv`. Normalize whitespace.
 2.  **Entity Resolution:** Standardize instructor names (e.g., mapping "STAFF STAFF" to a generic ID, handling minor typos using Levenshtein distance).
+3.  **Load PostgreSQL:** Use bulk inserts (`COPY` command or Pandas `to_sql` for speed).
+4.  **Sync Meilisearch:** Create a flattened JSON structure for every course (combining metadata and slots) and push to the Meilisearch index.
+c ID, handling minor typos using Levenshtein distance).
 3.  **Load PostgreSQL:** Use bulk inserts (`COPY` command or Pandas `to_sql` for speed).
 4.  **Sync Meilisearch:** Create a flattened JSON structure for every course (combining metadata and slots) and push to the Meilisearch index.
